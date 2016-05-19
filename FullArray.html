@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>全排列算法递归实现演示</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="Title" content="全排列算法递归实现演示" />
+<meta name="Description" content="全排列算法递归实现演示" />
+<meta name="Keywords" content="全排列,递归,算法演示,javascript" />
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+
+<link href="assets/css/effects.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="blog-masthead">
+  <div class="container">
+    <nav class="blog-nav"> <a class="blog-nav-item active" href="#">作者:xxx</a> </nav>
+  </div>
+</div>
+<div class="container">
+  <div class="blog-header">
+    <h1 class="blog-title">全排列算法递归实现演示</h1>
+    <p class="lead blog-description">The demonstration of an recursive algorithm in Full Array.</p>
+  </div>
+  <div class="row">
+    <div class="col-sm-8 blog-main">
+      <div class="blog-post">
+        <h2 class="blog-post-title">演示区</h2>
+        <p class="blog-post-meta">请在右侧选项中调节演示参数</p>
+        <p id="status" style="color:#15550E">初始</p>
+        <h2 id="mainShow"> <span id="box1" class="bbox label label-default">1</span> <span id="box2" class="bbox label label-default">2</span> <span id="box3" class="bbox label label-default">3</span> <span id="box4" class="bbox label label-default">4</span> <span id="box5" class="bbox label label-default">5</span> <span id="box6" class="bbox label label-default">6</span> <span id="box7" class="bbox label label-default">7</span> <span id="box8" class="bbox label label-default">8</span> </h2>
+        <br>
+        <br>
+        <p>以下为已记录的全排列</p>
+        <pre><code id="recording"></code></pre>
+        <hr>
+        <h2>算法源码(Javascript)</h2>
+        <p>方法一</p>
+<pre><code>function swap(i,j) {
+		var temp;
+		temp = myArr1[i];
+		myArr1[i]=myArr1[j];
+		myArr1[j]=temp;
+        
+		
+		recStr[recStrn] = ("s"+myArr1[i])+myArr1[j]; //记录步骤
+		recStrn++;
+	}
+function fullArray1(m,n) {
+	if (m==n) {
+		recStr[recStrn] = "p"; //记录步骤
+		for (var i=0;i&lt;=n;i++) {
+			recStr[recStrn] +=myArr1[i];
+		}
+		recStrn++;
+				
+		return;
+	}
+	else {
+		for (var j=m;j&lt;=n;j++) {
+			swap(m,j);
+			fullArray1(m+1,n);
+			swap(j,m);
+		}
+		return;
+	}
+} </code></pre>
+      <p>方法二</p>
+ <pre><code>function searchNum(n) {
+		if (recArr[n]==0) return true;
+		else return false;
+	}
+function fullArray2(n,max) {
+	if (n>max) {
+		recStr[recStrn] = "p"; //记录步骤
+		for (var i=0;i&lt;n-1;i++) {
+			recStr[recStrn] +=myArr2[i];
+		}
+		recStrn++;
+		return;
+	}
+	for (var i=1;i&lt;=max;i++)　{
+		if (searchNum(i)) {
+			recArr[i]=n; //记录步骤
+			recStr[recStrn] = ("a"+i)+n;
+			recStrn++;
+			myArr2[n-1]=i;
+			fullArray2(n+1,max);
+			recStr[recStrn] = "r"+i; //记录步骤
+			recStrn++;
+			recArr[i]=0;
+		}
+	}
+    return;
+}</code></pre>
+      <p>查看<a href="assets/js/main.js">完整Js代码</a></p>
+      </div>
+      <!-- /.blog-post --> 
+      
+    </div>
+    <!-- /.blog-main -->
+    
+    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+      <div class="sidebar-module sidebar-module-inset">
+        <h4>设定</h4>
+        <p class="blue"> 算法 </p>
+        <div class="radio">
+          <label>
+            <input type="radio" name="algo" id="optionsRadios1" value="1" checked>
+            （交换）递归 </label>
+          <label>
+            <input type="radio" name="algo" id="optionsRadios2" value="2">
+            类似八皇后的递归回溯算法 </label>
+        </div>
+        <p class="blue"> 数组长度 </p>
+        <div class="radio">
+          <label>
+            <input type="radio" name="length" id="radio4" value="4" checked>
+            n=4 </label>
+          <label>
+            <input type="radio" name="length" id="radio8" value="8">
+            n=8 </label>
+        </div>
+        <p class="blue"> 动画速度 </p>
+        <div class="range">
+          <label>
+            <input type="range" name="speed" id="optionsSpeed" min="1" max="10" value="5">
+          </label>
+        </div>
+        <p class="blue"> 流程控制 </p>
+        <p>
+          <button type="button" id="btnplay" class="btn btn-default btn-sm">演示</button>
+          <button type="button" id="btnstop" class="btn btn-default btn-sm disabled">复位</button>
+          <button type="button" id="btnpause" class="btn btn-default btn-sm disabled">暂停</button>
+          <br>
+          <button type="button" id="btnprev" class="btn btn-default btn-sm disabled">上一步</button>
+          <button type="button" id="btnnext" class="btn btn-default btn-sm disabled">下一步</button>
+        </p>
+      </div>
+    </div>
+    <!-- /.row --> 
+    
+  </div>
+  <!-- /.container --> 
+</div>
+<footer class="blog-footer">
+  <p>本演示模板由 <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a> 提供支持.</p>
+  <p> <a href="#">返回顶部</a> </p>
+</footer>
+<script src="assets/js/jquery.min.js"></script> 
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 --> 
+<script src="assets/js/bootstrap.min.js"></script> 
+<script src="assets/js/main.js"></script> 
+
+</body>
+</html>
